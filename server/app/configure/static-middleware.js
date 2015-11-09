@@ -16,4 +16,6 @@ module.exports = function (app) {
     app.use(express.static(publicPath));
     app.use(express.static(browserPath));
 
+		app.use(express.static(path.join(root, './server/FilesToServe')))
+
 };
