@@ -23,9 +23,10 @@ app.post('/view', function(req, res, next) {
 	});
 });
 
-app.get('/view', function(req, res, next) {
+app.get('/views', function(req, res, next) {
 	View.find({})
 	.then(function(views) {
+		console.log('HI');
 		res.status(200).json(views);
 	});
 });

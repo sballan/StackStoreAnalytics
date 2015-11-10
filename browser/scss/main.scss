@@ -20,6 +20,15 @@ body {
   margin: 0 auto;
 }
 
+.product {
+  list-style-type: none;
+}
+
+.user {
+  margin-bottom: 20px;
+}
+
+
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';
