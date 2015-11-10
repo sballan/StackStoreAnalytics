@@ -15,15 +15,21 @@ require('./configure')(app);
 var clientSite = "http://localhost:1337"
 
 // WRITE ALL ROUTES HERE, WHY NOT!!
-app.post('/view', function(req, res, next) {
-	View.create(req.body)
-	.then(function(newView) {
-		res.setHeader('Access-Control-Allow-Origin', clientSite);
-		res.status(201).send(newView);
-	});
+app.post('/', function(req, res, next) {
+	console.log('before if', req.body)
+	if (req.body.checkout || req.body.product) {
+		console.log('become a thing', req.body)
+		View.create(req.body)
+		.then(function(newView) {
+			console.log('it\'s a thing', review)
+			res.setHeader('Access-Control-Allow-Origin', clientSite);
+			res.status(201).send(newView);
+		})
+		.then(null, next)
+	}
 });
 
-app.get('/views', function(req, res, next) {
+app.get('/', function(req, res, next) {
 	View.find({})
 	.then(function(views) {
 		console.log('HI');

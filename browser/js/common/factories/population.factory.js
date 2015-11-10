@@ -4,9 +4,8 @@ app.factory('PopulationFactory', function ($http) {
 	var PopulationFactory = {
 
 		getAllViews: function() {
-			return $http.get('/views')
+			return $http.get('/')
 			.then(function(res) {
-				console.log('views')
 				return res.data
 			})
 		},

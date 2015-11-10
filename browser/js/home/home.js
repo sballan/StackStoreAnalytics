@@ -21,22 +21,24 @@ app.controller('HomeCtrl', function ($scope, allUsers, allProducts, views) {
 
     $scope.allUsers = allUsers;
     $scope.allProducts = allProducts;
-    $scope.views = views;
-    
-    console.log('views', $scope.views);
-    console.log('users', $scope.allUsers);
-    console.log('products', $scope.allProducts);
+    $scope.views = views.filter(function(view) {
+        return view.user !== "" && view.product !== "";
+    });
+    $scope.viewsNoUser = views.filter(function(view) {
+        return view.user == "" && view.product !== "";
+    });
 
     // Build data sctructure
     $scope.viewsByUser = [];
+    //[{user: user1, product1: 3, product2: 4}, {user: user1, product1: 3, product2: 4}]
 
     $scope.allUsers.forEach(function(user) {
         var thisUser = {};
         thisUser.user = user.email;
         $scope.views.forEach(function(view) {
-            if (view.user !== "" && view.product !== "") {
-                if (view.user == user._id) {
-                    var thisProduct; 
+            if (view.product !== "") {
+                if (view.user && view.user == user._id) {
+                    var thisProduct;
                     $scope.allProducts.forEach(function(product) {
                         if (view.product == product._id) thisProduct = product.name;
                     });
@@ -46,6 +48,17 @@ app.controller('HomeCtrl', function ($scope, allUsers, allProducts, views) {
         });
         $scope.viewsByUser.push(thisUser);
     });
-    console.log('The Thing', $scope.viewsByUser)
+
+    $scope.noUser = {user: 'NA'};
+    $scope.viewsNoUser.forEach(function(view) {
+        $scope.allProducts.forEach(function(product) {
+            if (product._id === view.product) {
+                var thisProduct = product.name;
+            }
+            $scope.noUser[thisProduct] = $scope.noUser[thisProduct] + 1 || 1;
+        })
+    });
+    delete $scope.noUser.undefined;
+    $scope.viewsByUser.push($scope.noUser);
 
 });
