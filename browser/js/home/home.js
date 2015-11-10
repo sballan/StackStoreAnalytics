@@ -8,17 +8,28 @@ app.config(function ($stateProvider) {
         	},
         	products: function(PopulationFactory) {
         		return PopulationFactory.getAllProducts();
-        	}
+        	},
+            views: function(PopulationFactory) {
+                return PopulationFactory.getAllViews();
+            }
         },
         controller: 'HomeCtrl'
     });
 });
 
-app.controller('HomeCtrl', function ($scope, users, products) {
-	console.log('hi');
-	$scope.users = users;
-	$scope.products = products;
+app.controller('HomeCtrl', function ($scope, products, PopulationFactory) {
 
-	console.log("users: ", $scope.users);
-	console.log("products: ", $scope.products);
+    $scope.products = products
+    console.log("prodcuts", products)
+
+    PopulationFactory.getAllUsers()
+    .then(function(users) {
+        $scope.users = users
+        console.log("users: ", $scope.users);
+    })
+    // $scope.products = products
+
+
+
+	// console.log("products: ", $scope.products);
 });

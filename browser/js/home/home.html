@@ -1,6 +1,9 @@
 <section id="home">
     <ul ng-repeat="user in users">
+    <p>{{user.email}}</p>
     	<li ng-repeat="product in user.products">
+    		<p>product.name</p>
+
     	</li>
     </ul>
     <script>console.log("hello dolly")</script>

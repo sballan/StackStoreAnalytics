@@ -11,12 +11,12 @@ console.log('WE HAVE THE FILE!!!!!');
 
 		$.ajax({
 			type: 'POST',
-			url: 'http://127.0.0.1:3001/view',
+			url: 'http://localhost:3001/view',
 			data: viewInfo,
 			success: function(newView) {
 				console.info('view event registered');
 			}
-		}); 
+		});
 	}
 
 });
