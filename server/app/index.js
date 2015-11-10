@@ -3,6 +3,8 @@ var path = require('path');
 var express = require('express');
 var app = express();
 module.exports = app;
+var mongoose = require('mongoose');
+var View = mongoose.model('View');
 
 // Pass our express application pipeline into the configuration
 // function located at server/app/configure/index.js
@@ -10,6 +12,25 @@ require('./configure')(app);
 
 // Routes that will be accessed via AJAX should be prepended with
 // /api so they are isolated from our GET /* wildcard.
+var clientSite = "http://localhost:1337"
+
+// WRITE ALL ROUTES HERE, WHY NOT!!
+app.post('/view', function(req, res, next) {
+	View.create(req.body)
+	.then(function(newView) {
+		res.setHeader('Access-Control-Allow-Origin', clientSite);
+		res.status(201).send(newView);
+	});
+});
+
+app.get('/view', function(req, res, next) {
+	View.find({})
+	.then(function(views) {
+		res.status(200).json(views);
+	});
+});
+
+
 app.use('/api', require('./routes'));
 
 /*
