@@ -3,10 +3,10 @@ app.config(function ($stateProvider) {
         url: '/',
         templateUrl: 'js/home/home.html',
         resolve: {
-        	users: function(PopulationFactory) {
+        	allUsers: function(PopulationFactory) {
         		return PopulationFactory.getAllUsers();
         	},
-        	products: function(PopulationFactory) {
+        	allProducts: function(PopulationFactory) {
         		return PopulationFactory.getAllProducts();
         	},
             views: function(PopulationFactory) {
@@ -17,19 +17,12 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('HomeCtrl', function ($scope, products, PopulationFactory) {
-
-    $scope.products = products
-    console.log("prodcuts", products)
-
-    PopulationFactory.getAllUsers()
-    .then(function(users) {
-        $scope.users = users
-        console.log("users: ", $scope.users);
-    })
-    // $scope.products = products
+app.controller('HomeCtrl', function ($scope, allUsers, allProducts, views) {
 
 
+    $scope.populateViews = function() {
+        views.forEach(function(user) {
 
-	// console.log("products: ", $scope.products);
+        })
+    }
 });

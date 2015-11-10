@@ -27,6 +27,7 @@ app.factory('PopulationFactory', function ($http) {
 			});
 		},
 
+
 	};
 
 	return PopulationFactory;
