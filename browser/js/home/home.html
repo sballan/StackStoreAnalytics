@@ -1,17 +1,17 @@
 <section id="home">
 	<h1>User Analytics</h1>
     <ul class="user row" ng-repeat="user in viewsByUser">
-    	<li class="col-sm-3"><h3 id="user-email">{{user.user}}</h3></li>
-    	<div class="col-sm-3">
+    	<li class="col-sm-4"><h3 id="user-email">{{user.user}}</h3></li>
+    	<div class="col-sm-4">
     	<h4>Products Viewed</h4>
-	    	<li ng-repeat="(key, value) in user">
-	    		<p ng-hide="$first">{{key}} : {{value}}</p>
+	    	<li ng-repeat="(key, value) in user.views">
+	    		<p>{{key}} : {{value}}</p>
 	    	</li>
 	    </div>
-	    <div class="col-sm-3">
+	    <div class="col-sm-4">
     	<h4>Products Purchased</h4>
-	    	<li ng-repeat="(key, value) in user">
-	    		<p ng-hide="$first">{{key}} : {{value}}</p>
+	    	<li ng-repeat="(key, value) in user.buys">
+	    		<p>{{key}} : {{value}}</p>
 	    	</li>
 	    </div>
     </ul>
