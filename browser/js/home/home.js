@@ -34,16 +34,12 @@ app.controller('HomeCtrl', function ($scope, allUsers, allProducts, views) {
         return view.checkout
     })
 
-    console.log('BUYS', $scope.buys)
-    //[ {user: userEmail, [{item, quant, price}, {item, quant, price}] ]
-
-
-
     // Build data sctructure
     $scope.viewsByUser = [];
     //[{user: user1, product1: 3, product2: 4}, {user: user1, product1: 3, product2: 4}]
     $scope.allUsers.forEach(function(user) {
         var thisUser = {};
+        thisUser.views = {}
         thisUser.user = user.email;
         $scope.views.forEach(function(view) {
             if (view.product !== "") {
@@ -52,7 +48,7 @@ app.controller('HomeCtrl', function ($scope, allUsers, allProducts, views) {
                     $scope.allProducts.forEach(function(product) {
                         if (view.product == product._id) thisProduct = product.name;
                     });
-                    thisUser[thisProduct] = thisUser[thisProduct] + 1 || 1;
+                    thisUser.views[thisProduct] = thisUser.views[thisProduct] + 1 || 1;
                 }
             }
         });
@@ -60,37 +56,51 @@ app.controller('HomeCtrl', function ($scope, allUsers, allProducts, views) {
     });
 
     $scope.noUser = {user: 'NA'};
+    $scope.noUser.views = {};
     $scope.viewsNoUser.forEach(function(view) {
         $scope.allProducts.forEach(function(product) {
             if (product._id === view.product) {
                 var thisProduct = product.name;
             }
-            $scope.noUser[thisProduct] = $scope.noUser[thisProduct] + 1 || 1;
+            $scope.noUser.views[thisProduct] = $scope.noUser.views[thisProduct] + 1 || 1;
         })
     });
-    delete $scope.noUser.undefined;
+    delete $scope.noUser.views.undefined;
     $scope.viewsByUser.push($scope.noUser);
 
     // FOR BUY DATA
-    $scope.userBuys = [];
-    $scope.allUsers.forEach(function(user) {
-        var thisUser = {};
-        thisUser.user = user.email;
-        $scope.buys.forEach(function(buy) {
-            if (buy.items.length) {
-                if (buy.user && user.user === user._id) {
-                    // loop through items
-                    buy.items.forEach(function(item) {
-                        var thisProduct;
-                        $scope.allProducts.forEach(function(product) {
-                            if (view.product === product._id) thisProduct = product.name;
-                        });
-                        thisUser[thisProduct] = thisUser[thisProduct] + 1 || 1;
-                    })
-                }
+   $scope.userBuys = [];
+   $scope.allUsers.forEach(function(user) {
+       var thisUser = {};
+       thisUser.buys = {};
+       thisUser.user = user.email;
+       $scope.buys.forEach(function(buy) {
+           if (buy.items.length) {
+               if (buy.user && buy.user === user._id) {
+                   // loop through items and build dictionary
+                   buy.items.forEach(function(item) {
+                    var thisProduct;
+                       $scope.allProducts.forEach(function(product) {
+                           if (item.product == product._id) {
+                                thisProduct = product.name;
+                           }
+                       });
+                       thisUser.buys[thisProduct] = thisUser.buys[thisProduct] + 1 || 1;
+                   });
+               }
+           }
+       });
+       $scope.userBuys.push(thisUser);
+   });
+   console.log('BUY DICTIONARY', $scope.userBuys);
+
+    $scope.viewsByUser.forEach(function(viewUser) {
+        $scope.userBuys.forEach(function(buyUser) {
+            if(viewUser.user === buyUser.user) {
+                viewUser.buys = buyUser.buys;
             }
-        });
-        $scope.viewsByUser.push(thisUser);
-    });
+        })
+    })
+    console.log('VBU', $scope.viewsByUser);
 
 });
