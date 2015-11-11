@@ -1,10 +1,11 @@
 <section id="home">
 	<h1>Product Views By User</h1>
     <ul class="user" ng-repeat="user in viewsByUser">
-    <p>{{user.email}}</p>
+    	<li><p>{{user.email}}</p></li>
     	<li class="product" ng-repeat="(key, value) in user">
     		<p>{{key}} : {{value}}</p>
     	</li>
     </ul>
+
 
 </section>

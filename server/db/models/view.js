@@ -5,9 +5,7 @@ var mongoose = require('mongoose');
 var schema = new mongoose.Schema({
     user: String,
     product: String,
-    items: {
-    	type: mongoose.Schema.Types.Mixed
-    },
+    items: Array,
     checkout: Boolean,
     time: {
         type: Date,
